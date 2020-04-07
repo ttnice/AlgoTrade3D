@@ -12,10 +12,8 @@ Classement positif :
 EUR/JPY  
 EUR/CHF  
 CHF/JPY  
-EUR/GBP  
-USD/JPY  
 
-Classement négatif : 
+Classement négatif :  
 USD/CHF  
 USD/CAD  
  
