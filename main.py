@@ -3,13 +3,20 @@ from DataObject import Data
 import numpy as np
 from datetime import datetime
 
+'''
+function ClickConnect(){
+    console.log("Clicked on connect button"); 
+    document.querySelector("colab-connect-button").click()
+}
+setInterval(ClickConnect,60000)
+'''
 
 
 
 
 
-
-epochs = 1
+epochs = 50
+print('starting')
 
 def main():
     my_ia = Ia()
@@ -29,10 +36,9 @@ def main():
     datas = np.array(datas)
     labels = np.array(labels)
     for i in range(epochs):
-        now = datetime.now()
-        my_ia.fit(datas, labels, 1)
+        my_ia.fit(datas, labels, 500)
         my_ia.save_folder(i)
-        print(datetime.now()-now)
+        print(i, datetime.now())
 
 
 
