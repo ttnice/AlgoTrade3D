@@ -15,7 +15,7 @@ setInterval(ClickConnect,60000)
 
 
 
-epochs = 50
+epochs = 100
 print('starting')
 
 def main():
@@ -25,20 +25,24 @@ def main():
 
     taille = 60
     predict_taille = 60
-    my_data = Data(taille, predict_taille, 'data/week1.csv')
+    my_data = Data(taille, predict_taille, 'data/scaled/Merged_2019.csv')
 
     datas = []
     labels = []
-    for i in range(my_data.len -taille -predict_taille):
+    #  for i in range(my_data.len -taille -predict_taille):
+    for i in range(60):
         datas.append(list(my_data.get_data(i)))
         labels.append(list(my_data.get_predict(i)))
 
     datas = np.array(datas)
     labels = np.array(labels)
-    for i in range(epochs):
-        my_ia.fit(datas, labels, 500)
-        my_ia.save_folder(i)
-        print(i, datetime.now())
+    start = datetime.now()
+    my_ia.fit(datas, labels, epochs)
+    history = f'{start} - {datetime.now()} : {epochs}'
+    # my_ia.save_folder(i)
+    open('Improvement/log.txt', 'a+').write(str(history) + '\n')
+    print(history)
+    # print(i, datetime.now())
 
 
 

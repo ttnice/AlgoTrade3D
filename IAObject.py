@@ -35,7 +35,10 @@ class Ia:
         self.model.compile(optimizer=sgd, loss=loss)
 
     def fit(self, datas, labels, epochs=10):
-        self.model.fit(datas, labels, epochs=epochs, verbose=0)
+        filepath = "Improvement/{epoch:03d}-{loss:.4f}.h5"
+        checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
+        callbacks_list = [checkpoint]
+        return self.model.fit(datas, labels, epochs=epochs, verbose=1, callbacks=callbacks_list)
 
     def predict(self, datas):
         values = self.model.predict(datas)
@@ -43,6 +46,9 @@ class Ia:
 
     def load(self, name):
         self.model = tf.keras.models.load_model(f'Backtest/{name}.h5')
+
+    def load_weights(self, name):
+        self.model.load_weights(f'Backtest/{name}.h5')
 
 
 if __name__ == '__main__':
