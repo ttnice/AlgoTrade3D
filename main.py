@@ -29,8 +29,8 @@ def main():
 
     datas = []
     labels = []
-    #  for i in range(my_data.len -taille -predict_taille):
-    for i in range(60):
+    for i in range(my_data.len -taille -predict_taille):
+        # for i in range(60):
         datas.append(list(my_data.get_data(i)))
         labels.append(list(my_data.get_predict(i)))
 
