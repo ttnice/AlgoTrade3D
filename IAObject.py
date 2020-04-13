@@ -38,7 +38,7 @@ class Ia:
         filepath = "Improvement/{epoch:03d}-{loss:.4f}.h5"
         checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
-        return self.model.fit(datas, labels, epochs=epochs, verbose=1, callbacks=callbacks_list)
+        return self.model.fit(datas, labels, batch_size=64, validation_split=.2, epochs=epochs, verbose=1, callbacks=callbacks_list, shuffle=True)
 
     def predict(self, datas):
         values = self.model.predict(datas)
@@ -48,7 +48,7 @@ class Ia:
         self.model = tf.keras.models.load_model(f'Backtest/{name}.h5')
 
     def load_weights(self, name):
-        self.model.load_weights(f'Backtest/{name}.h5')
+        self.model.load_weights(f'{name}.h5')
 
 
 if __name__ == '__main__':

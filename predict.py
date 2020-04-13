@@ -23,11 +23,15 @@ print('starting')
 def main():
     my_ia = Ia()
     my_ia.create_model()
-    my_ia.load_weights('16')
+    my_ia.load_weights('Improvement/100-0.0004')
+
+    my_ia2 = Ia()
+    my_ia2.create_model()
+    my_ia2.load_weights('Backtest/Save/16')
 
     taille = 60
     predict_taille = 60
-    my_data = Data(taille, predict_taille, 'data/week1.csv')
+    my_data = Data(taille, predict_taille, 'data/scaled/Merged_2019.csv')
 
     datas = []
     labels = []
@@ -39,9 +43,12 @@ def main():
 
     labels = np.array(labels)
     predicts = my_ia.predict(datas)
+    predicts2 = my_ia2.predict(datas)
     for i in range(len(datas)):
         plt.plot(labels[i], label="Label")
-        plt.plot(predicts[i], label="Predict")
+        # plt.plot(predicts[i], label="Predict")
+        # plt.plot(predicts2[i], label="Predict2")
+        # plt.ylim((0, 1))
 
         plt.legend()
         plt.show(block=True)

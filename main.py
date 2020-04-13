@@ -2,6 +2,7 @@ from IAObject import Ia
 from DataObject import Data
 import numpy as np
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 '''
 function ClickConnect(){
@@ -15,7 +16,7 @@ setInterval(ClickConnect,60000)
 
 
 
-epochs = 100
+epochs = 3
 print('starting')
 
 def main():
@@ -26,10 +27,14 @@ def main():
     taille = 60
     predict_taille = 60
     my_data = Data(taille, predict_taille, 'data/scaled/Merged_2019.csv')
+    # my_data = Data(taille, predict_taille, 'data/week1.csv')
+
+
 
     datas = []
     labels = []
     for i in range(my_data.len -taille -predict_taille):
+    # for i in range(100):
         # for i in range(60):
         datas.append(list(my_data.get_data(i)))
         labels.append(list(my_data.get_predict(i)))
@@ -37,12 +42,22 @@ def main():
     datas = np.array(datas)
     labels = np.array(labels)
     start = datetime.now()
-    my_ia.fit(datas, labels, epochs)
-    history = f'{start} - {datetime.now()} : {epochs}'
+    history = my_ia.fit(datas, labels, epochs)
+    print(history.history)
+    log = f'{start} - {datetime.now()} : {epochs} LOSS : {history.history["loss"][-1]}'
     # my_ia.save_folder(i)
-    open('Improvement/log.txt', 'a+').write(str(history) + '\n')
-    print(history)
+    open('Improvement/log.txt', 'a+').write(str(log) + '\n')
+
     # print(i, datetime.now())
+    print(history.history.keys())
+    # "Loss"
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'validation'], loc='upper left')
+    plt.show()
 
 
 
