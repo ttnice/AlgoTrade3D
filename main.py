@@ -16,7 +16,7 @@ setInterval(ClickConnect,60000)
 
 
 
-epochs = 3
+epochs = 100
 print('starting')
 
 def main():
