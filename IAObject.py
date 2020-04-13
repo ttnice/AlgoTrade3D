@@ -30,7 +30,7 @@ class Ia:
 
         self.model = tf.keras.models.Model(inputs=[val_input], outputs=[val_output])
 
-    def compiler(self, loss='mean_squared_error', lr=0.001, decay=0.000_001):
+    def compiler(self, loss='mean_squared_error', lr=0.000_001, decay=0.000_000_1):
         sgd = tf.keras.optimizers.SGD(lr=lr, decay=decay)
         self.model.compile(optimizer=sgd, loss=loss)
 

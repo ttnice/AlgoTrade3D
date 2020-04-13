@@ -23,11 +23,11 @@ print('starting')
 def main():
     my_ia = Ia()
     my_ia.create_model()
-    my_ia.load_weights('Backtest/Save/04-13/100-0.0004.h5')
+    my_ia.load_weights('Backtest/Save/04-13/100-0.0004')
 
     my_ia2 = Ia()
     my_ia2.create_model()
-    my_ia2.load_weights('Improvement/003-0.3845.h5')
+    my_ia2.load_weights('Improvement/003-0.3845')
 
     taille = 60
     predict_taille = 60
