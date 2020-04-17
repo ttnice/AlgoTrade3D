@@ -23,11 +23,11 @@ print('starting')
 def main():
     my_ia = Ia()
     my_ia.create_model()
-    my_ia.load_weights('Backtest/Save/04-13/100-0.0004')
+    my_ia.load_weights('Backtest/Save/04-10/16')
 
     my_ia2 = Ia()
     my_ia2.create_model()
-    my_ia2.load_weights('Improvement/003-0.3845')
+    my_ia2.load_weights('Backtest/Save/04-13/100-0.0004')
 
     taille = 60
     predict_taille = 60
@@ -36,7 +36,7 @@ def main():
     datas = []
     labels = []
     # for i in range(my_data.len -taille -predict_taille):
-    for i in range(10):
+    for i in range(my_data.len -taille -predict_taille-10, my_data.len -taille -predict_taille):
         idx = random.randint(0, my_data.len -taille -predict_taille)
         datas.append(list(my_data.get_data(idx)))
         labels.append(list(my_data.get_predict(idx)))

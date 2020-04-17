@@ -3,6 +3,7 @@ from DataObject import Data
 import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
+import os
 
 '''
 function ClickConnect(){
@@ -12,18 +13,25 @@ function ClickConnect(){
 setInterval(ClickConnect,60000)
 '''
 
+version = '2.0.0'
+date = '04-17'
+v = version.split('.')[0]
 
-print('v.2.3')
-
+# Creating folder
+v_path = f'Backtest/{v}/'
+path = f'Backtest/{v}/{date}/'
+os.makedirs(path, exist_ok=True)
 
 epochs = 100
 print('starting')
+print(f'v {version} - {date}')
 
 def main():
-    my_ia = Ia()
+    my_ia = Ia(version, path)
     my_ia.create_model()
-    my_ia.load_weights('/content/drive/My Drive/Colab Notebooks/GitHub/AlgoTrade3D/Backtest/Save/04-14/017-0.0005021')
+    # my_ia.load_weights('Backtest/1/04-15/084-0.0003822.h5')
     my_ia.compiler()
+    my_ia.save_model(v_path+'model.json')
 
     taille = 60
     predict_taille = 60
@@ -61,8 +69,6 @@ def main():
     plt.show()
 
 
-
-
-
 if __name__ == '__main__':
     main()
+    pass
