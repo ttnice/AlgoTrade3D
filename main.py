@@ -13,7 +13,7 @@ setInterval(ClickConnect,60000)
 '''
 
 
-
+print('v.2.3')
 
 
 epochs = 100
@@ -22,6 +22,7 @@ print('starting')
 def main():
     my_ia = Ia()
     my_ia.create_model()
+    my_ia.load_weights('/content/drive/My Drive/Colab Notebooks/GitHub/AlgoTrade3D/Backtest/Save/04-14/017-0.0005021')
     my_ia.compiler()
 
     taille = 60

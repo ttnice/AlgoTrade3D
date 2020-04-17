@@ -30,12 +30,12 @@ class Ia:
 
         self.model = tf.keras.models.Model(inputs=[val_input], outputs=[val_output])
 
-    def compiler(self, loss='mean_squared_error', lr=0.000_001, decay=0.000_000_1):
+    def compiler(self, loss='mean_squared_error', lr=0.01, decay=0.000_1):
         sgd = tf.keras.optimizers.SGD(lr=lr, decay=decay)
         self.model.compile(optimizer=sgd, loss=loss)
 
     def fit(self, datas, labels, epochs=10):
-        filepath = "Improvement/{epoch:03d}-{loss:.4f}.h5"
+        filepath = "Improvement/{epoch:03d}-{loss:.7f}.h5"
         checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
         return self.model.fit(datas, labels, batch_size=64, validation_split=.2, epochs=epochs, verbose=1, callbacks=callbacks_list, shuffle=True)
