@@ -10,19 +10,22 @@ class Ia:
 
     def create_model(self):
         val_input = tf.keras.layers.Input(shape=(60, 6, 4, 1), name='input')
+        x = tf.keras.layers.Conv3D(128, (3, 1, 1), activation='linear')(val_input)
+        x = tf.keras.layers.Conv3D(128, (2, 2, 1), activation='linear')(x)
+        x = tf.keras.layers.Conv3D(64, (4, 1, 4), activation='linear')(x)
 
-        x = tf.keras.layers.Flatten()(val_input)
-        x = tf.keras.layers.Reshape((60, 6*4))(x)
+        x = tf.keras.layers.Flatten()(x)
+        x = tf.keras.layers.Reshape((54, 64 * 5))(x)
 
-        x = tf.keras.layers.LSTM(256, return_sequences=True)(x)
+        x = tf.keras.layers.LSTM(256, return_sequences=True, activation='linear')(x)
         x = tf.keras.layers.Dropout(0.2)(x)
-        x = tf.keras.layers.Dense(256)(x)
+        x = tf.keras.layers.Dense(256, activation='linear')(x)
 
-        x = tf.keras.layers.LSTM(128)(x)
+        x = tf.keras.layers.LSTM(128, return_sequences=True, activation='linear')(x)
         x = tf.keras.layers.Dropout(0.2)(x)
-        x = tf.keras.layers.Dense(128)(x)
+        x = tf.keras.layers.Dense(128, activation='linear')(x)
 
-        val_output = tf.keras.layers.Dense(60)(x)
+        val_output = tf.keras.layers.Dense(60, activation='linear')(x)
 
         self.model = tf.keras.models.Model(inputs=[val_input], outputs=[val_output])
 
@@ -34,7 +37,7 @@ class Ia:
         filepath = f'{self.path}'+"{epoch:03d}-{loss:.7f}.h5"
         checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
-        return self.model.fit(datas, labels, batch_size=64, validation_split=.2, epochs=epochs, verbose=1, callbacks=callbacks_list, shuffle=True)
+        return self.model.fit(datas, labels, batch_size=128, validation_split=.2, epochs=epochs, verbose=1, callbacks=callbacks_list, shuffle=True)
 
     def predict(self, datas):
         values = self.model.predict(datas)
@@ -47,12 +50,10 @@ class Ia:
         self.model.save_weights(name)
 
     def save_model(self, name):
-        print('finish_starting')
         model_json = self.model.to_json()
         with open(name, "w") as json_file:
             json_file.write(model_json)
             json_file.close()
-        print('finish_saving')
 
     def load(self, name):
         self.model = tf.keras.models.load_model(name)

@@ -13,8 +13,8 @@ function ClickConnect(){
 setInterval(ClickConnect,60000)
 '''
 
-version = '2.0.0'
-date = '04-17'
+version = '3.0.0'
+date = '04-18'
 v = version.split('.')[0]
 
 # Creating folder
@@ -29,7 +29,7 @@ print(f'v {version} - {date}')
 def main():
     my_ia = Ia(version, path)
     my_ia.create_model()
-    # my_ia.load_weights('Backtest/1/04-15/084-0.0003822.h5')
+    # my_ia.load_weights('Backtest/2/04-17/002-0.0270678.h5')
     my_ia.compiler()
     my_ia.save_model(v_path+'model.json')
 
