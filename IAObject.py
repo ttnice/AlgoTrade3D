@@ -21,7 +21,7 @@ class Ia:
         x = tf.keras.layers.Dropout(0.2)(x)
         x = tf.keras.layers.Dense(256, activation='linear')(x)
 
-        x = tf.keras.layers.LSTM(128, return_sequences=True, activation='linear')(x)
+        x = tf.keras.layers.LSTM(128, activation='linear')(x)
         x = tf.keras.layers.Dropout(0.2)(x)
         x = tf.keras.layers.Dense(128, activation='linear')(x)
 

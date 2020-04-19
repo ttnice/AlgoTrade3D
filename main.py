@@ -13,7 +13,7 @@ function ClickConnect(){
 setInterval(ClickConnect,60000)
 '''
 
-version = '3.0.0'
+version = '3.0.1'
 date = '04-18'
 v = version.split('.')[0]
 
