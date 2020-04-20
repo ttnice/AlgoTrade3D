@@ -11,9 +11,9 @@ class Ia:
 
     def create_model(self):
         val_input = tf.keras.layers.Input(shape=(60, 6, 4, 1), name='input')
-        x = tf.keras.layers.Conv3D(128, (3, 1, 1), activation='linear')(val_input)
-        x = tf.keras.layers.Conv3D(128, (2, 2, 1), activation='linear')(x)
-        x = tf.keras.layers.Conv3D(64, (4, 1, 4), activation='linear')(x)
+        x = tf.keras.layers.Conv3D(512, (3, 1, 1), activation='linear')(val_input)
+        x = tf.keras.layers.Conv3D(256, (2, 2, 1), activation='linear')(x)
+        x = tf.keras.layers.Conv3D(128, (4, 1, 4), activation='linear')(x)
 
         x = tf.keras.layers.Flatten()(x)
         x = tf.keras.layers.Reshape((54, 64 * 5))(x)
