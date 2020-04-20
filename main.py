@@ -40,8 +40,8 @@ def main():
 
     taille = 60
     predict_taille = 60
-    # my_data = Data(taille, predict_taille, 'data/scaled/Merged_2019.csv')
-    my_data = Data(taille, predict_taille, 'data/week1.csv')
+    my_data = Data(taille, predict_taille, 'data/scaled/Merged_2019.csv')
+    # my_data = Data(taille, predict_taille, 'data/week1.csv')
 
 
 
