@@ -13,8 +13,8 @@ function ClickConnect(){
 setInterval(ClickConnect,60000)
 '''
 
-version = '3.0.1'
-date = '04-18'
+version = '4.0.0'
+date = '04-20'
 v = version.split('.')[0]
 
 # Creating folder
@@ -22,21 +22,26 @@ v_path = f'Backtest/{v}/'
 path = f'Backtest/{v}/{date}/'
 os.makedirs(path, exist_ok=True)
 
+initial_epoch = None
+loss = 0.2860381
 epochs = 100
 print('starting')
 print(f'v {version} - {date}')
 
 def main():
-    my_ia = Ia(version, path)
-    my_ia.create_model()
-    # my_ia.load_weights('Backtest/2/04-17/002-0.0270678.h5')
+    my_ia = Ia(version, path, date)
+    if not initial_epoch is None:
+        my_ia.load_model(v_path + 'model.json')
+        my_ia.load_weights(f'{path}{initial_epoch:03d}-{loss:.7f}.h5')
+    else:
+        my_ia.create_model()
+        my_ia.save_model(v_path + 'model.json')
     my_ia.compiler()
-    my_ia.save_model(v_path+'model.json')
 
     taille = 60
     predict_taille = 60
-    my_data = Data(taille, predict_taille, 'data/scaled/Merged_2019.csv')
-    # my_data = Data(taille, predict_taille, 'data/week1.csv')
+    # my_data = Data(taille, predict_taille, 'data/scaled/Merged_2019.csv')
+    my_data = Data(taille, predict_taille, 'data/week1.csv')
 
 
 
@@ -51,7 +56,7 @@ def main():
     datas = np.array(datas)
     labels = np.array(labels)
     start = datetime.now()
-    history = my_ia.fit(datas, labels, epochs)
+    history = my_ia.fit(datas, labels, epochs, validation_split=.5, batch_size=128, initial_epoch=initial_epoch)
     print(history.history)
     log = f'{start} - {datetime.now()} : {epochs} LOSS : {history.history["loss"][-1]}'
     # my_ia.save_folder(i)

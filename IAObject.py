@@ -3,9 +3,10 @@ import numpy as np
 
 
 class Ia:
-    def __init__(self, v, path):
+    def __init__(self, v, path, date):
         self.model = None
         self.v = v
+        self.date = date
         self.path = path
 
     def create_model(self):
@@ -31,13 +32,25 @@ class Ia:
 
     def compiler(self, loss='mean_squared_error', lr=0.001, decay=0.000_1):
         sgd = tf.keras.optimizers.SGD(lr=lr, decay=decay)
-        self.model.compile(optimizer=sgd, loss=loss)
+        self.model.compile(optimizer=sgd, loss=loss, metrics=['mae', 'acc'])
 
-    def fit(self, datas, labels, epochs=10):
+    def fit(self, datas, labels, epochs=10, validation_split=0.1, batch_size=64, initial_epoch=None):
         filepath = f'{self.path}'+"{epoch:03d}-{loss:.7f}.h5"
+        # filepath = f'{self.path}'+"{epoch:03d}.h5"
         checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
-        callbacks_list = [checkpoint]
-        return self.model.fit(datas, labels, batch_size=128, validation_split=.2, epochs=epochs, verbose=1, callbacks=callbacks_list, shuffle=True)
+        tensorboard = tf.keras.callbacks.TensorBoard(f'Backtest/logs/{self.v}-{self.date}', histogram_freq=1)
+
+        callbacks_list = [checkpoint, tensorboard]
+        return self.model.fit(datas,
+                              labels,
+                              batch_size=batch_size,
+                              validation_split=validation_split,
+                              epochs=epochs,
+                              initial_epoch=0 if initial_epoch is None else initial_epoch,
+                              verbose=1,
+                              callbacks=callbacks_list,
+                              shuffle=True,
+                              )
 
     def predict(self, datas):
         values = self.model.predict(datas)
