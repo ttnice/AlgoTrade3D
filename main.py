@@ -13,7 +13,7 @@ function ClickConnect(){
 setInterval(ClickConnect,60000)
 '''
 
-version = '4.0.0'
+version = '5.0.0'
 date = '04-20'
 v = version.split('.')[0]
 
@@ -56,7 +56,7 @@ def main():
     datas = np.array(datas)
     labels = np.array(labels)
     start = datetime.now()
-    history = my_ia.fit(datas, labels, epochs, validation_split=.5, batch_size=128, initial_epoch=initial_epoch)
+    history = my_ia.fit(datas, labels, epochs, validation_split=.1, batch_size=128, initial_epoch=initial_epoch)
     print(history.history)
     log = f'{start} - {datetime.now()} : {epochs} LOSS : {history.history["loss"][-1]}'
     # my_ia.save_folder(i)

@@ -18,6 +18,18 @@ class Ia:
         x = tf.keras.layers.Flatten()(x)
         x = tf.keras.layers.Reshape((54, 64 * 5))(x)
 
+        x = tf.keras.layers.LSTM(512, return_sequences=True, activation='linear')(x)
+        x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dense(512, activation='linear')(x)
+
+        x = tf.keras.layers.LSTM(512, return_sequences=True, activation='linear')(x)
+        x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dense(512, activation='linear')(x)
+
+        x = tf.keras.layers.LSTM(256, return_sequences=True, activation='linear')(x)
+        x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dense(256, activation='linear')(x)
+
         x = tf.keras.layers.LSTM(256, return_sequences=True, activation='linear')(x)
         x = tf.keras.layers.Dropout(0.2)(x)
         x = tf.keras.layers.Dense(256, activation='linear')(x)

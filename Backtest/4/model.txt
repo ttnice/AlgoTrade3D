@@ -1,0 +1,19 @@
+        val_input = tf.keras.layers.Input(shape=(60, 6, 4, 1), name='input')
+        x = tf.keras.layers.Conv3D(128, (3, 1, 1), activation='linear')(val_input)
+        x = tf.keras.layers.Conv3D(128, (2, 2, 1), activation='linear')(x)
+        x = tf.keras.layers.Conv3D(64, (4, 1, 4), activation='linear')(x)
+
+        x = tf.keras.layers.Flatten()(x)
+        x = tf.keras.layers.Reshape((54, 64 * 5))(x)
+
+        x = tf.keras.layers.LSTM(256, return_sequences=True, activation='linear')(x)
+        x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dense(256, activation='linear')(x)
+
+        x = tf.keras.layers.LSTM(128, activation='linear')(x)
+        x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dense(128, activation='linear')(x)
+
+        val_output = tf.keras.layers.Dense(60, activation='linear')(x)
+
+        self.model = tf.keras.models.Model(inputs=[val_input], outputs=[val_output])
