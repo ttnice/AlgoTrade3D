@@ -16,7 +16,7 @@ class Ia:
         x = tf.keras.layers.Conv3D(128, (4, 1, 4), activation='linear')(x)
 
         x = tf.keras.layers.Flatten()(x)
-        x = tf.keras.layers.Reshape((54, 64 * 5))(x)
+        x = tf.keras.layers.Reshape((54, 128 * 5))(x)
 
         x = tf.keras.layers.LSTM(512, return_sequences=True, activation='linear')(x)
         x = tf.keras.layers.Dropout(0.2)(x)
