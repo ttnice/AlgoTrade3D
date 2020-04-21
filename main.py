@@ -13,7 +13,7 @@ function ClickConnect(){
 setInterval(ClickConnect,60000)
 '''
 
-version = '5.0.1'
+version = '5.0.2'
 date = '04-20'
 v = version.split('.')[0]
 
@@ -22,8 +22,8 @@ v_path = f'Backtest/{v}/'
 path = f'Backtest/{v}/{date}/'
 os.makedirs(path, exist_ok=True)
 
-initial_epoch = None
-loss = 0.2860381
+initial_epoch = 1
+loss = 0.1209331
 epochs = 100
 print('starting')
 print(f'v {version} - {date}')
