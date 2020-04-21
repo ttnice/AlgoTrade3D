@@ -14,20 +14,29 @@ setInterval(ClickConnect,60000)
 '''
 
 
+version = '5.0.2'
+date = '04-20'
+v = version.split('.')[0]
 
+# Creating folder
+v_path = f'Backtest/{v}/'
+path = f'Backtest/{v}/{date}/'
 
-
-epochs = 50
+# model name
+initial_epoch = 6
+loss = 0.0124470
 print('starting')
 
 def main():
-    my_ia = Ia()
+    my_ia = Ia(version, path, date)
+    # my_ia.load_model(v_path + 'model.json')
     my_ia.create_model()
-    my_ia.load_weights('Backtest/Save/04-10/16')
+    my_ia.load_weights(f'{path}{initial_epoch:03d}-{loss:.7f}.h5')
 
-    my_ia2 = Ia()
-    my_ia2.create_model()
-    my_ia2.load_weights('Backtest/Save/04-13/100-0.0004')
+    # my_ia2 = Ia(version, path, date)
+    # my_ia2.create_model()
+    # my_ia2.load_model('Backtest/4/model.json')
+    # my_ia2.load_weights('Backtest/4/04-20/033-0.0103890.h5')
 
     taille = 60
     predict_taille = 60
@@ -43,12 +52,12 @@ def main():
 
     labels = np.array(labels)
     predicts = my_ia.predict(datas)
-    predicts2 = my_ia2.predict(datas)
+    # predicts2 = my_ia2.predict(datas)
     for i in range(len(datas)):
         plt.plot(labels[i], label="Label")
         plt.plot(predicts[i], label="Predict")
-        plt.plot(predicts2[i], label="Predict2")
-        plt.ylim((0, 1))
+        # plt.plot(predicts2[i], label="Predict2")
+        # plt.ylim((0, 1))
 
         plt.legend()
         plt.show(block=True)

@@ -42,8 +42,8 @@ class Ia:
 
         self.model = tf.keras.models.Model(inputs=[val_input], outputs=[val_output])
 
-    def compiler(self, loss='mean_squared_error', lr=0.001, decay=0.000_1):
-        sgd = tf.keras.optimizers.SGD(lr=lr, decay=decay)
+    def compiler(self, loss='mean_squared_error', lr=0.01, decay=0.000_001, momentum=0.9, nesterov=True):
+        sgd = tf.keras.optimizers.SGD(lr=lr, decay=decay, momentum=momentum, nesterov=nesterov)
         self.model.compile(optimizer=sgd, loss=loss, metrics=['mae', 'acc'])
 
     def fit(self, datas, labels, epochs=10, validation_split=0.1, batch_size=64, initial_epoch=None):

@@ -22,8 +22,8 @@ v_path = f'Backtest/{v}/'
 path = f'Backtest/{v}/{date}/'
 os.makedirs(path, exist_ok=True)
 
-initial_epoch = 1
-loss = 0.1209331
+initial_epoch = 6
+loss = 0.0124470
 epochs = 100
 print('starting')
 print(f'v {version} - {date}')
@@ -31,7 +31,8 @@ print(f'v {version} - {date}')
 def main():
     my_ia = Ia(version, path, date)
     if not initial_epoch is None:
-        my_ia.load_model(v_path + 'model.json')
+        # my_ia.load_model(v_path + 'model.json')
+        my_ia.create_model()
         my_ia.load_weights(f'{path}{initial_epoch:03d}-{loss:.7f}.h5')
     else:
         my_ia.create_model()
