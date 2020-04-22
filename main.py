@@ -13,8 +13,8 @@ function ClickConnect(){
 setInterval(ClickConnect,60000)
 '''
 
-version = '5.0.4'
-date = '04-20'
+version = '6.0.0'
+date = '04-22'
 v = version.split('.')[0]
 
 # Creating folder
@@ -22,7 +22,7 @@ v_path = f'Backtest/{v}/'
 path = f'Backtest/{v}/{date}/'
 os.makedirs(path, exist_ok=True)
 
-initial_epoch = 6
+initial_epoch = None
 loss = 0.0124470
 epochs = 100
 print('starting')
