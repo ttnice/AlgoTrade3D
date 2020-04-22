@@ -29,7 +29,7 @@ print('starting')
 print(f'v {version} - {date}')
 
 def main():
-    my_ia = Ia(version, path, date)
+    my_ia = Ia(v, path, date)
     if not initial_epoch is None:
         # my_ia.load_model(v_path + 'model.json')
         my_ia.create_model()

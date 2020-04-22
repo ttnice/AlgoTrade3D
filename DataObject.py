@@ -15,7 +15,7 @@ class Data:
             'USDCAD-Open', 'USDCAD-High', 'USDCAD-Low', 'USDCAD-Close'
         ]
         self._df = self.df[self.order]
-        self.predict_df = self.df['EURCHF-Close']
+        self.predict_df = self.df['EURUSD-Close']
         self.taille = taille
         self.predict_taille = predict_taille
 

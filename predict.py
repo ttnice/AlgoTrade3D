@@ -23,8 +23,8 @@ v_path = f'Backtest/{v}/'
 path = f'Backtest/{v}/{date}/'
 
 # model name
-initial_epoch = 6
-loss = 0.0124470
+initial_epoch = 29
+loss = 0.0002655
 print('starting')
 
 def main():
@@ -44,26 +44,35 @@ def main():
 
     datas = []
     labels = []
+
+    idx = 0
+
     # for i in range(my_data.len -taille -predict_taille):
     for i in range(my_data.len -taille -predict_taille-10, my_data.len -taille -predict_taille):
         idx = random.randint(0, my_data.len -taille -predict_taille)
-        datas.append(list(my_data.get_data(idx)))
-        labels.append(list(my_data.get_predict(idx)))
+        data = list(my_data.get_data(idx))
+        label = list(my_data.get_predict(idx))
 
-    labels = np.array(labels)
-    predicts = my_ia.predict(datas)
+        datas.append(data)
+        labels.append(label)
+
+    close = []
+    for data in datas:
+        close.append([i[3][3][0] for i in data])
+    print(close)
+    print(labels)
+    print(np.array(labels))
+    labels = close + np.array(labels)
+    predicts = close + my_ia.predict(datas)
     # predicts2 = my_ia2.predict(datas)
     for i in range(len(datas)):
-        plt.plot(labels[i], label="Label")
-        plt.plot(predicts[i], label="Predict")
+        plt.plot(np.concatenate((close[i], labels[i])), label="Label")
+        plt.plot(np.concatenate((close[i], predicts[i])), label="Predict")
         # plt.plot(predicts2[i], label="Predict2")
         # plt.ylim((0, 1))
 
         plt.legend()
         plt.show(block=True)
-
-
-
 
 
 if __name__ == '__main__':
