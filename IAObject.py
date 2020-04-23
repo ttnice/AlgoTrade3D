@@ -8,6 +8,7 @@ class Ia:
         self.v = v
         self.date = date
         self.path = path
+        self.callbacks_list = []
 
     def create_model(self):
         val_input = tf.keras.layers.Input(shape=(60, 6, 4, 1), name='input')
@@ -43,13 +44,13 @@ class Ia:
         sgd = tf.keras.optimizers.SGD(lr=lr, decay=decay, momentum=momentum, nesterov=nesterov)
         self.model.compile(optimizer=sgd, loss=loss, metrics=['mae', 'acc'])
 
-    def fit(self, datas, labels, epochs=10, validation_split=0.1, batch_size=64, initial_epoch=None):
-        filepath = f'{self.path}'+"{epoch:03d}-{loss:.7f}.h5"
-        # filepath = f'{self.path}'+"{epoch:03d}.h5"
-        checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
-        tensorboard = tf.keras.callbacks.TensorBoard(f'Backtest/logs/{self.v}-{self.date}', histogram_freq=1)
+    def init_callbacks(self, tensorboard=True, checkpoint=True):
+        if tensorboard:
+            self.callbacks_list.append(tf.keras.callbacks.TensorBoard(f'Backtest/logs/{self.v}-{self.date}', histogram_freq=1))
+        if checkpoint:
+            self.callbacks_list.append(tf.keras.callbacks.ModelCheckpoint(f'{self.path}'+"{epoch:03d}-{loss:.7f}.h5", monitor='loss', verbose=1, save_best_only=True, mode='min'))
 
-        callbacks_list = [checkpoint, tensorboard]
+    def fit(self, datas, labels, epochs=10, validation_split=0.1, batch_size=64, initial_epoch=None):
         return self.model.fit(datas,
                               labels,
                               batch_size=batch_size,
@@ -57,7 +58,7 @@ class Ia:
                               epochs=epochs,
                               initial_epoch=0 if initial_epoch is None else initial_epoch,
                               verbose=1,
-                              callbacks=callbacks_list,
+                              callbacks=self.callbacks_list if len(self.callbacks_list)>0 else None,
                               shuffle=True,
                               )
 
