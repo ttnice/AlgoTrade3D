@@ -14,8 +14,8 @@ setInterval(ClickConnect,60000)
 '''
 
 
-version = '5.0.2'
-date = '04-20'
+version = '6.0.2'
+date = '04-22'
 v = version.split('.')[0]
 
 # Creating folder
@@ -23,8 +23,8 @@ v_path = f'Backtest/{v}/'
 path = f'Backtest/{v}/{date}/'
 
 # model name
-initial_epoch = 29
-loss = 0.0002655
+initial_epoch = 17
+loss = 0.0002303
 print('starting')
 
 def main():
@@ -62,8 +62,8 @@ def main():
     print(close)
     print(labels)
     print(np.array(labels))
-    labels = close + np.array(labels)
-    predicts = close + my_ia.predict(datas)
+    labels = np.array(labels)
+    predicts = my_ia.predict(datas)
     # predicts2 = my_ia2.predict(datas)
     for i in range(len(datas)):
         plt.plot(np.concatenate((close[i], labels[i])), label="Label")
