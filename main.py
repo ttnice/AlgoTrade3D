@@ -6,6 +6,10 @@ import matplotlib.pyplot as plt
 import os
 
 '''
+tensorboard --logdir Backtest/logs/
+'''
+
+'''
 function ClickConnect(){
     console.log("Clicked on connect button"); 
     document.querySelector("colab-connect-button").click()
